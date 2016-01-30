@@ -77,7 +77,10 @@ dtExtractNamed<-dtExtractNamed[,c(1,81,2:80)] ##reorder the columns so the df is
 
 ## 5 From the data set in step 4, creates a second, independent tidy data set with the average of 
 ##each variable for each activity and each subject.
-dtMean<-dtExtractNamed %>% group_by(subject,activityName) %>% summarise_each(funs(mean)) 
+##Also, change appropriate field names to indicate this is a 'mean of means'
+dtMean<-dtExtractNamed %>% group_by(subject,activityName) %>% summarise_each(funs(mean))
+colnames(dtMean) <- paste("mean", colnames(dtMean), sep = "_")
+names(dtMean)[names(dtMean)%in% c("mean_subject","mean_activityName")] <- c("subject","activityName")
 ##This satisfies Step 5
 
 ##write tidy dataset to file if it doesn't already exist
