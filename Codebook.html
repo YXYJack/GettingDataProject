@@ -142,19 +142,20 @@ img {
 <ul>
 <li>Extract only the measurements on the mean and standard deviation for each field, using <code>grepl</code> on “mean” and/or “std”. Result stored in dtExtract</li>
 <li>Apply descriptive activity names by loading activity_labels.txt from the UCI HAR .zip and applying to dtExtract. Manipulate (drop, reorder) certain columns for readability. Result stored in dtExtractNamed</li>
-<li>Create a different/unique tidy data-set by calculating the mean of each variable in dtExtractNamed. Result stored in dtMean.<br /></li>
+<li>Create a different/unique tidy data-set by calculating the mean of each variable in dtExtractNamed. Result stored in dtMean.</li>
+<li>Change title of field variable names to reflect that they are now a ‘mean of means’</li>
 <li>Sample of dtMean follows:</li>
 </ul>
 <pre class="r"><code>head(dtMean[,1:5],n=3)</code></pre>
 <pre><code>## Source: local data frame [3 x 5]
 ## Groups: subject [1]
 ## 
-##   subject activityName tBodyAcc-mean()-X tBodyAcc-mean()-Y
-##     (int)       (fctr)             (dbl)             (dbl)
-## 1       1       LAYING         0.2215982      -0.040513953
-## 2       1      SITTING         0.2612376      -0.001308288
-## 3       1     STANDING         0.2789176      -0.016137590
-## Variables not shown: tBodyAcc-mean()-Z (dbl)</code></pre>
+##   subject activityName mean_tBodyAcc-mean()-X mean_tBodyAcc-mean()-Y
+##     (int)       (fctr)                  (dbl)                  (dbl)
+## 1       1       LAYING              0.2215982           -0.040513953
+## 2       1      SITTING              0.2612376           -0.001308288
+## 3       1     STANDING              0.2789176           -0.016137590
+## Variables not shown: mean_tBodyAcc-mean()-Z (dbl)</code></pre>
 </div>
 <div id="writing-tidy-data-to-output-file" class="section level3">
 <h3>Writing tidy data to output file</h3>

@@ -31,7 +31,8 @@ The following files are part of this project:
 
 1. Readme.md: this file
 2. Codebook.rmd: the project Codebook including explanation of data, variables and transformations
-3. run_analysis.R: R script that performs the required steps per instruction
-4. TidyDataSetForCleaningProject.txt: text file containing the output of project instruction step 5
+3. Codebook.md: as above, but with no live R code chunks
+4. run_analysis.R: R script that performs the required steps per instruction
+5. TidyDataSetForCleaningProject.txt: text file containing the output of project instruction step 5
 
 **Note: the codebook contains a description of the required run_analysis.R script file.  This file in the only file needed to execute the 5 steps called for in the instructions**
