@@ -1,0 +1,90 @@
+---
+title: "Codebook for Project Assignment in Getting and Cleaning Data"
+author: "YXYJack"
+date: "January 29, 2016"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+```{r include=FALSE}
+source('run_analysis.R')
+```
+
+#Study Design
+***
+This activity analyzes the UCI HAR Dataset.zip (considered the raw data here) which represents data collected from the accelerometers from the Samsung Galaxy S smartphone carried by a group of 30 volunteers. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. 
+
+The analysis described in this codebook calculates the means of the variables in the raw data set grouped by person and activity.  The means have a possible range of [-1,1]; the units are either standard gravity units or radians/second, depending on the particular field.  The means are stored in a tidy data-set "TidyDataSetForCleaningProject.txt" 
+
+The complete list of variables of each feature and summary information is available in UCI HAR Dataset.zip/features.txt and UCI HAR Dataset.zip/features_info.txt  See the codebook section for instruction on obtaining the raw data.
+
+#Codebook
+***
+For convenience, the codebook is divided into the following subsections:
+
+1. variables in TidyDataSetForCleaningProject.txt
+2. variables in the data set not contained in the tidy data
+3. description of transformation creating "TidyDataSetForCleaningProject.txt"
+
+##Variables in TidyDataSetForCleaningProject.txt
+
+Consists of the following column names and descriptions:
+
+1. subject: Identity of volunteer.  Range 1-30
+2. activityName: activity performed when measurements were collected.  Range:{WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING} 
+3. columns 3-81: feature names as described in UCI HAR Dataset.zip/features.txt
+  + *acc* fields: The acceleration signal from the smartphone accelerometer in standard gravity units 'g'.  Mean of values from raw data-set.  Raw data-set values normalized and bounded to [-1,1] 
+  + *gyro* fields: The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second.  Mean of values from raw data-set.  Raw data-set values normalized and bounded to [-1,1]
+
+## Variables in the data set not contained in the tidy data
+
+The following UCI HAR Dataset.zip files are directly or indirectly represented in "TidyDataSetForCleaningProject.txt" **all others are excluded**
+
+* y_train.txt
+* X_train.txt
+* subject_train.txt
+* y_test.txt
+* X_test.txt
+* subject_test.txt
+* features.txt
+* activity_labels.txt
+
+The complete list of variables of each feature and summary information is available in UCI HAR Dataset.zip/features.txt and UCI HAR Dataset.zip/features_info.txt.
+
+A full description of the raw data is available at the site where the data was obtained:
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+
+The raw data itself is available here:
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+##Description of transformation creating "TidyDataSetForCleaningProject.txt"
+**refer to the accompanying R script: "run_analysis.R"**
+
+The transformation consists of the following major functions:
+
+1. Retrieving, loading and assembling one data-set from UCI HAR Dataset.zip data
+2. Manipulating data
+3. Writing tidy data to output file
+
+###Retrieving and loading UCI HAR Datast.zip data
+
+* Retrieves a copy of "UCI HAR Dataset.zip", if a local copy doesn't already exist
+* Loads seven different /*.txt data-sets from the raw data using `unz': y_train,y_test,X_test,X_train,subject_test,subject_train,features
+* successively merges the different data-sets in pairs using `rbind` and `cbind` until a single data-set results.Result stored as dt.  
+  + Example follows:
+```{r}
+head(dt[,1:4],n=3)
+```
+
+###Manipulating data
+
+* Extract only the measurements on the mean and standard deviation for each field, using `grepl` on "mean" and/or "std".  Result stored in dtExtract
+* Apply descriptive activity names by loading activity_labels.txt from the UCI HAR .zip and applying to dtExtract.  Manipulate (drop, reorder) certain columns for readability.  Result stored in dtExtractNamed
+* Create a different/unique tidy data-set by calculating the mean of each variable in dtExtractNamed.  Result stored in dtMean.  
+  + Sample of dtMean follows:
+```{r}
+head(dtMean[,1:5],n=3)
+```
+###Writing tidy data to output file
+*Checks if "TidyDataSetForCleaningProject.txt" already exists in the working directory, and if not writes it as a .txt file.
