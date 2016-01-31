@@ -87,5 +87,6 @@ head(dt[,1:4],n=3)
 ```{r}
 head(dtMean[,1:5],n=3)
 ```
-###Writing tidy data to output file
-*Checks if "TidyDataSetForCleaningProject.txt" already exists in the working directory, and if not writes it as a .txt file.
+### Writing tidy data to output file
+
+* Writes text file "TidyDataSetForCleaningProject.txt" to the working directory using `write.table`

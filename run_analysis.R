@@ -1,7 +1,7 @@
 packages=c("data.table","plyr","dplyr","reshape")
 sapply(packages, require, character.only=TRUE, quietly=TRUE)
 
-setwd("C:/Users/Mark/Desktop/datascience/Cleaning Data/Week4")
+setwd("C:\Users\Mark\Desktop\datascience\Cleaning Data\Week4\GettingDataProject")
 ##Here are the data for the project:https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 ##You should create one R script called run_analysis.R that does the following.
 ## 1Merges the training and the test sets to create one data set.
@@ -81,10 +81,10 @@ dtExtractNamed<-dtExtractNamed[,c(1,81,2:80)] ##reorder the columns so the df is
 dtMean<-dtExtractNamed %>% group_by(subject,activityName) %>% summarise_each(funs(mean))
 colnames(dtMean) <- paste("mean", colnames(dtMean), sep = "_")
 names(dtMean)[names(dtMean)%in% c("mean_subject","mean_activityName")] <- c("subject","activityName")
-##This satisfies Step 5
 
-##write tidy dataset to file if it doesn't already exist
-if(!file.exists("TidyDataSetForCleaningProject.txt")){
+
+##write tidy dataset to file - this satisfies Step 5
 write.table(dtMean,file="TidyDataSetForCleaningProject.txt",quote = FALSE, 
             sep = "\t", row.names = FALSE)
-}
+
+## this satisfies Step 5 of the project
